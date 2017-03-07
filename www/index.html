@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Drupal 8 decoupled mobile and web-app</title>
+  <meta http-equiv="Content-Security-Policy" content="default-src *; script-src * 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data:">
+
+  <script src="lib/onsen/js/onsenui.js"></script>
+
+  <script src="js/app.js"></script>
+  <script src="js/services.js"></script>
+  <script src="js/controllers.js"></script>
+  <!--<script src="js/jdrupal.min.js"></script>-->
+
+  <script src="src/core.js"></script>
+  <script src='src/includes/module.inc.js'></script>
+  <script src='src/includes/rest.inc.js'></script>
+  <script src='src/includes/views.inc.js'></script>
+  <script src='src/entity.js'></script>
+  <script src='src/comment.js'></script>
+  <script src='src/file.js'></script>
+  <script src='src/node.js'></script>
+  <script src='src/taxonomy_term.js'></script>
+  <script src='src/taxonomy_vocabulary.js'></script>
+  <script src='src/user.js'></script>
+
+  <link rel="stylesheet" href="lib/onsen/css/onsenui.css">
+  <link rel="stylesheet" href="lib/onsen/css/onsen-css-components.css">
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+    <!-- Add side menu -->
+    <ons-page>
+      <ons-splitter id="mySplitter">
+        <ons-splitter-side id="menu" page="html/menu.html" swipeable width="250px" collapse swipe-target-width="50px">
+        </ons-splitter-side>
+        <ons-splitter-content id="content" page="homePage.html">
+        </ons-splitter-content>
+      </ons-splitter>
+    </ons-page>
+
+  <ons-template id="homePage.html">
+    <ons-page id="homePage">
+      <ons-navigator id="myNavigator" page="html/profile.html"></ons-navigator>
+    </ons-page>
+  </ons-template>
+
+  <!-- modal popup for when pages are loading -->
+  <ons-modal id="loadingModal">
+    <ons-icon icon="ion-load-c" spin="true"></ons-icon>
+    <br><br>
+    Please wait.<br>Loading...
+  </ons-modal>
+
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<ons-page id="menuPage">
+  <ons-list id="menu-profile">
+    <ons-list-header>Profile</ons-list-header>
+    <ons-list-item onclick="fn.push('html/profile.html')" tappable>
+      View
+    </ons-list-item>
+    <ons-list-item onclick="fn.push('html/profile_edit.html')" tappable>
+      Edit
+    </ons-list-item>
+  </ons-list>
+
+  <ons-list id="menu-content">
+    <ons-list-header>Content</ons-list-header>
+    <ons-list-item onclick="fn.push('html/content_view.html')" tappable>
+      View
+    </ons-list-item>
+    <ons-list-item onclick="fn.push('content_create.html')" tappable>
+      Create
+    </ons-list-item>
+
+  </ons-list>
+
+  <ons-list>
+    <ons-list-item onclick="myApp.services.logout()" tappable>
+      Logout
+    </ons-list-item>
+
+  </ons-list>
+
+</ons-page>
