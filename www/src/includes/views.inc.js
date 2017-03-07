@@ -38,10 +38,6 @@ jDrupal.Views.prototype.getView = function() {
     };
     req.open('GET', jDrupal.restPath() + self.getPath());
 
-    if (jDrupal.withCredentials()) {
-      req.withCredentials = true;
-    }
-
     var loaded = function() {
       self.results = JSON.parse(req.response);
       resolve();

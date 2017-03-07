@@ -14,16 +14,10 @@ document.addEventListener('init', function(event) {
   }
 
   // Define the path of the backend Drupal site.
-  jDrupal.config('sitePath', 'http://myjisc.local');
+  jDrupal.config('sitePath', '[host url]');
 
   // Define jDrupal hooks.
   jDrupal.modules['cordova'] = ['cordova_rest_pre_process', 'cordova_rest_post_process'];
-
-  jDrupal.contentType('article').then(function(schema) {
-
-  }, function(fail) {
-    alert(fail.message);
-  })
 
 });
 
