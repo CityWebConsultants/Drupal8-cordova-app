@@ -14,7 +14,7 @@ document.addEventListener('init', function(event) {
   }
 
   // Define the path of the backend Drupal site.
-  if (ons.isAndroid()) {
+  if (ons.platform.isAndroid()) {
 
     // On Android emulators you cannot access local domains the same way you could on a browser of even iOS.
     // To access localhost, instead of 127.0.0.1, you have to use 10.0.2.2. This causes issues when trying to access
@@ -22,7 +22,7 @@ document.addEventListener('init', function(event) {
     jDrupal.config('sitePath', 'http://10.0.2.2:8080');
   }
   else {
-    jDrupal.config('sitePath', '[backend domain]');
+    jDrupal.config('sitePath', 'http://myjisc.local');
   }
 
 
