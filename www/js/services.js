@@ -17,8 +17,13 @@ myApp.services = {
 
       }
       else {
+
         document.querySelector('#myNavigator').pushPage('html/login.html');
       }
+
+    }, function(fail) {
+
+      ons.notification.alert(fail.message);
 
     });
 

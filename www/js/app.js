@@ -14,7 +14,17 @@ document.addEventListener('init', function(event) {
   }
 
   // Define the path of the backend Drupal site.
-  jDrupal.config('sitePath', '[host url]');
+  if (ons.isAndroid()) {
+
+    // On Android emulators you cannot access local domains the same way you could on a browser of even iOS.
+    // To access localhost, instead of 127.0.0.1, you have to use 10.0.2.2. This causes issues when trying to access
+    // cookies from local domains.
+    jDrupal.config('sitePath', 'http://10.0.2.2:8080');
+  }
+  else {
+    jDrupal.config('sitePath', '[backend domain]');
+  }
+
 
   // Define jDrupal hooks.
   jDrupal.modules['cordova'] = ['cordova_rest_pre_process', 'cordova_rest_post_process'];

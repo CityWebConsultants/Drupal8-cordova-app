@@ -25,6 +25,7 @@ jDrupal.token = function() {
     req.open('GET', jDrupal.restPath() + 'rest/session/token');
 
     req.onload = function() {
+
       if (req.status == 200) {
         var invoke = jDrupal.moduleInvokeAll('rest_post_process', req);
         if (!invoke) { resolve(req.response); }
@@ -64,6 +65,7 @@ jDrupal.connect = function() {
         });
       }
     };
+
     req.onload = function() {
       if (req.status != 200) { reject(Error(req.statusText)); return; }
       var invoke = jDrupal.moduleInvokeAll('rest_post_process', req);
@@ -93,6 +95,7 @@ jDrupal.userLogin = function(name, pass) {
 
     var connected = function() { jDrupal.connect().then(resolve); };
     req.onload = function() {
+
       if (req.status == 200) {
         var invoke = jDrupal.moduleInvokeAll('rest_post_process', req);
         if (!invoke) { connected(); }

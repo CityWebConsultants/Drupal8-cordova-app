@@ -31,6 +31,11 @@
 </head>
 
 <body>
+<script type="text/javascript">
+  window.onerror = function(message, url, lineNumber) {
+    ons.notification.alert("Error: "+message+" in "+url+" at line "+lineNumber);
+  }
+</script>
     <!-- Add side menu -->
     <ons-page>
       <ons-splitter id="mySplitter">
@@ -53,6 +58,7 @@
     <br><br>
     Please wait.<br>Loading...
   </ons-modal>
+
 
 </body>
 
