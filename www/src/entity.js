@@ -247,6 +247,7 @@ jDrupal.Entity.prototype.save = function() {
         req.setRequestHeader('X-CSRF-Token', token);
 
         req.onload = function() {
+
           _entity.postSave(req).then(function() {
             if (
               (method == 'POST' && req.status == 201) ||
@@ -282,6 +283,7 @@ jDrupal.Entity.prototype.postSave = function(xhr) {
   return new Promise(function(resolve, reject) {
     // For new entities, grab their id from the Location response header.
     if (self.isNew()) {
+
       var parts = xhr.getResponseHeader('Location').split('/');
       var entityID =
         self.entity[self.getEntityKey('id')] = [ {

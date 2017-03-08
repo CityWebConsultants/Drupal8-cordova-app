@@ -72,6 +72,13 @@ myApp.controllers = {
   //////////////////////////
   nodeCreatePage: function(page) {
 
+    // Save button click event.
+    page.querySelector('[component="button/save-node"]').onclick = function() {
+
+      myApp.services.node.save(null, 'edit-field-list');
+
+    };
+
   },
 
   //////////////////////////

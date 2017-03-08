@@ -165,39 +165,8 @@ myApp.services = {
 
     // Save a node given a list of form elements.
     'save': function(nid, list) {
-      // Load the node before saving.
-      jDrupal.nodeLoad(nid).then(function(node) {
 
-        var listElement = document.getElementById(list); //My ons-list element
-
-        // Get the field elements.
-        Array.prototype.forEach.call(listElement.querySelectorAll('.list__item'), function(element) {
-
-          // Get the field name.
-          if (element.querySelector('ons-if') != null) {
-            var key = element.querySelector('ons-if').innerText;
-          }
-          else {
-            var key = element.querySelector('label').innerText ;
-          }
-          // Get the field value.
-          var value = element.querySelector('input').value;
-
-          if (element.querySelector('input').type == 'checkbox') {
-            value = element.querySelector('input').checked;
-          }
-
-          node.entity[key][0].value = value;
-        });
-
-        // Remove protected fields. These will return '403: Forbidden' if included.
-        delete node.entity['uid'];
-        delete node.entity['created'];
-        delete node.entity['promote'];
-        delete node.entity['sticky'];
-        delete node.entity['path'];
-        delete node.entity['comment'];
-
+      function saveNode(node) {
         // Show modal while saving.
         fn.modalShow();
         node.save().then(function() {
@@ -212,11 +181,82 @@ myApp.services = {
           fn.modalHide();
           ons.notification.alert(fail.message);
         });
+      }
+
+      if (nid) {
+        // Load the node before saving.
+        jDrupal.nodeLoad(nid).then(function (node) {
+
+          var listElement = document.getElementById(list); //My ons-list element
+
+          // Get the field elements.
+          Array.prototype.forEach.call(listElement.querySelectorAll('.list__item'), function (element) {
+
+            // Get the field name.
+            if (element.querySelector('ons-if') != null) {
+              var key = element.querySelector('ons-if').innerText;
+            }
+            else {
+              var key = element.querySelector('label').innerText;
+            }
+            // Get the field value.
+            var value = element.querySelector('input').value;
+
+            if (element.querySelector('input').type == 'checkbox') {
+              value = element.querySelector('input').checked;
+            }
+
+            node.entity[key][0].value = value;
+          });
+
+          // Remove protected fields. These will return '403: Forbidden' if included.
+          delete node.entity['uid'];
+          delete node.entity['created'];
+          delete node.entity['promote'];
+          delete node.entity['sticky'];
+          delete node.entity['path'];
+          delete node.entity['comment'];
+
+          saveNode(node);
 
 
-      }, function(fail) {
-        ons.notification.alert(fail.message);
-      });
+        }, function (fail) {
+          ons.notification.alert(fail.message);
+        });
+
+      }
+      else {
+
+        var listElement = document.getElementById(list); //My ons-list element
+
+        var node = {type: [ { target_id: 'article' } ]};
+
+        // Get all the fields from the form.
+        Array.prototype.forEach.call(listElement.querySelectorAll('.list__item'), function (element) {
+
+          // Get the field name.
+          if (element.querySelector('ons-if') != null) {
+            var key = element.querySelector('ons-if').innerText;
+          }
+          else {
+            var key = element.querySelector('label').innerText;
+          }
+
+          // Get the field value.
+          var value = element.querySelector('.input').value;
+
+          if (element.querySelector('.input').type == 'checkbox') {
+            value = element.querySelector('input').checked;
+          }
+
+          node[key.toLowerCase()] = [{value : value}];
+        });
+
+        var node = new jDrupal.Node(node);
+
+        saveNode(node);
+
+      }
 
 
     },

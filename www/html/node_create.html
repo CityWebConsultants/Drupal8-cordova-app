@@ -11,10 +11,22 @@
     </div>
   </ons-toolbar>
 
-  <div id="edit-field-list">
+  <ons-list id="edit-field-list">
     <ons-list-header>Add node fields</ons-list-header>
+    <ons-list-item>
+      <ons-if platform="ios other" class="left left-label">Title</ons-if>
+      <div class="center">
+        <ons-input class="input" input-id="title-input" type="text" data-key="title" placeholder="Title" float></ons-input>
+      </div>
+    </ons-list-item>
 
-  </div>
+    <ons-list-item>
+      <ons-if platform="ios other" class="left left-label">Body</ons-if>
+      <div class="center">
+        <textarea class="input textarea textarea--transparent" input-id="body-input" data-key="body" placeholder="Body" float></textarea>
+      </div>
+    </ons-list-item>
+  </ons-list>
 
   <ons-if platform="ios other">
     <ons-button modifier="large" component="button/save-node">Save</ons-button>
