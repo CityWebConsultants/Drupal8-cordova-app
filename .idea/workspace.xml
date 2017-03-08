@@ -2,10 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="dfc4709d-0b3a-483b-b465-ee3b30be42a0" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/html/menu.html" afterPath="$PROJECT_DIR$/www/html/menu.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/html/node_create.html" afterPath="$PROJECT_DIR$/www/html/node_create.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/controllers.js" afterPath="$PROJECT_DIR$/www/js/controllers.js" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/js/services.js" afterPath="$PROJECT_DIR$/www/js/services.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/www/src/entity.js" afterPath="$PROJECT_DIR$/www/src/entity.js" />
     </list>
     <ignored path="acorn.iws" />
@@ -46,8 +42,8 @@
       <file leaf-file-name="entity.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/www/src/entity.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="249" column="0" lean-forward="true" selection-start-line="249" selection-start-column="0" selection-end-line="249" selection-end-column="0" />
+            <state relative-caret-position="180">
+              <caret line="284" column="4" lean-forward="false" selection-start-line="284" selection-start-column="4" selection-end-line="284" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -397,7 +393,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="11444000" />
+    <option name="totallyTimeSpent" value="11754000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1369" height="783" extended-state="0" />
@@ -586,8 +582,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/www/src/entity.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="249" column="0" lean-forward="true" selection-start-line="249" selection-start-column="0" selection-end-line="249" selection-end-column="0" />
+        <state relative-caret-position="180">
+          <caret line="284" column="4" lean-forward="false" selection-start-line="284" selection-start-column="4" selection-end-line="284" selection-end-column="4" />
           <folding />
         </state>
       </provider>
