@@ -205,6 +205,47 @@ myApp.controllers = {
   },
 
   ////////////////////////
+  // Group Page Controller //
+  ////////////////////////
+  groupViewPage : function(page) {
+
+    // Load the 'Frontpage' view which has had the 'Rest export' display added.
+    jDrupal.viewsLoad('groups').then(function(view) {
+
+      var results = view.getResults();
+      var listElement = document.getElementById('group-list'); //My ons-list element
+
+      for (var i = 0; i < results.length; i ++) {
+
+        var node = new jDrupal.Node(results[i]);
+        var newItemElement = document.createElement('ons-list-item'); //My new item
+        newItemElement.innerText = node.getTitle(); //Text or HTML inside
+        newItemElement.setAttribute('tappable', '');
+        newItemElement.setAttribute('onclick', "fn.push('html/group.html', {data: {nid: " + node.id() + "}})");
+        listElement.appendChild(newItemElement)
+
+      }
+    });
+
+  },
+  //////////////////////////
+  // Group View Page Controller //
+  //////////////////////////
+  groupPage: function(page) {
+
+    // Click handler for Edit button
+    page.querySelector('[component="button/edit-group"]').onclick = function () {
+      fn.push('html/node_edit.html', {data: {nid : document.querySelector('#myNavigator').topPage.data.nid}});
+    };
+
+    // Refresh the previous page on clicking back incase node was updated.
+    document.querySelector('#nodePage ons-back-button').options = {refresh: true}
+
+    // Load node and append to list.
+    myApp.services.node.load(document.querySelector('#myNavigator').topPage.data.nid, 'field-list');
+
+  },
+  ////////////////////////
   // Menu Page Controller //
   ////////////////////////
   menuPage: function(page) {

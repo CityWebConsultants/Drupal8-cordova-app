@@ -4,7 +4,7 @@ window.myApp = {};
 document.addEventListener('init', function(event) {
 
   // Spook the browser to render like an android app.
-  //ons.platform.select('android');
+ // ons.platform.select('android');
 
   var page = event.target;
 
@@ -19,10 +19,10 @@ document.addEventListener('init', function(event) {
     // On Android emulators you cannot access local domains the same way you could on a browser of even iOS.
     // To access localhost, instead of 127.0.0.1, you have to use 10.0.2.2. This causes issues when trying to access
     // cookies from local domains.
-    jDrupal.config('sitePath', 'http://10.0.2.2:8080');
+    jDrupal.config('sitePath', 'http://f2d9a102.ngrok.io/mysite');
   }
   else {
-    jDrupal.config('sitePath', 'http://myjisc.local');
+    jDrupal.config('sitePath', 'http://f2d9a102.ngrok.io/mysite');
   }
 
 
