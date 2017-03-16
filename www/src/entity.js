@@ -11,13 +11,13 @@ jDrupal.Entity = function(entityType, bundle, id) {
 
   // @TODO Allow an entity object to be passed in.
 
-  this.entity = null;
+  this.entity = {};
+  this.entity[id] = [{value : id}];
 
   // @TODO these flat values need to be turned into arrays, e.g. [ { value: 'foo'} ]
   this.bundle = bundle;
   this.entityID = id;
-
-  this.entityKeys = {};
+  this.entityKeys = {id : id, type : entityType};;
 };
 
 /**

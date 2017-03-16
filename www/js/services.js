@@ -359,13 +359,198 @@ myApp.services = {
   },
 
   entity : {
+
+        // Save a node given a list of form elements.
+    'save': function(entity, type, id, list) {
+
+      function saveEntity(node) {
+        // Show modal while saving.
+        fn.modalShow();
+        node.save().then(function() {
+
+          // After saving, go back to previous page and refresh data.
+          fn.pop({refresh: true, callback: function(e) {
+            fn.modalHide();
+            ons.notification.alert('Node saved.');
+          }});
+
+        }, function (fail) {
+          fn.modalHide();
+          ons.notification.alert(fail.message);
+        });
+      }
+      console.log(id);
+      if (id) {
+        // Load the node before saving.
+        var entity = new jDrupal.Entity(entity, type, id);
+        entity.load().then(function(node){
+
+          var listElement = document.getElementById(list); //My ons-list element
+
+          // Get the field elements.
+          Array.prototype.forEach.call(listElement.querySelectorAll('.list__item'), function (element) {
+
+            // Get the field name.
+            if (element.querySelector('ons-if') != null) {
+              var key = element.querySelector('ons-if').innerText;
+            }
+            else {
+              var key = element.querySelector('label').innerText;
+            }
+            // Get the field value.
+            var value = element.querySelector('input').value;
+
+            if (element.querySelector('input').type == 'checkbox') {
+              value = element.querySelector('input').checked;
+            }
+
+            node.entity[key][0].value = value;
+          });
+
+          // Remove protected fields. These will return '403: Forbidden' if included.
+          delete node.entity['uid'];
+          delete node.entity['created'];
+          delete node.entity['promote'];
+          delete node.entity['sticky'];
+          delete node.entity['path'];
+          delete node.entity['comment'];
+
+          saveEntity(node);
+
+
+        }, function (fail) {
+          ons.notification.alert(fail.message);
+        });
+
+      }
+      else {
+
+        var listElement = document.getElementById(list); //My ons-list element
+
+        var node = {type: [ { target_id: 'article' } ]};
+
+        // Get all the fields from the form.
+        Array.prototype.forEach.call(listElement.querySelectorAll('.list__item'), function (element) {
+
+          // Get the field name.
+          if (element.querySelector('ons-if') != null) {
+            var key = element.querySelector('ons-if').innerText;
+          }
+          else {
+            var key = element.querySelector('label').innerText;
+          }
+
+          // Get the field value.
+          var value = element.querySelector('.input').value;
+
+          if (element.querySelector('.input').type == 'checkbox') {
+            value = element.querySelector('input').checked;
+          }
+
+          node[key.toLowerCase()] = [{value : value}];
+        });
+
+        var node = new jDrupal.Node(node);
+
+        saveEntity(node);
+
+      }
+
+
+    },
+        // Render an entity edit form.
+    'update' : function(entity, type, id, list) {
+
+      // Exclude fields from the form.
+      var excludeList = ['id','nid', 'uuid', 'vid', 'revision_timestamp', 'revision_translation_affected'];
+      // Load the node the selected node from previous page.
+      
+      var entity = new jDrupal.Entity(entity, type, id);
+      entity.load().then(function(node){
+
+        // List to add the form elements to.
+        var listElement = document.getElementById(list); //My ons-list element
+
+        for (var key in node.entity) {
+          // skip loop if the property is from prototype
+          if (!node.entity.hasOwnProperty(key) || excludeList.indexOf(key) > -1) continue;
+
+          var obj = node.entity[key];
+          for (var prop in obj) {
+            // skip loop if the property is from prototype
+            if (!obj.hasOwnProperty(prop)) continue;
+
+            if (typeof obj[0].value != 'undefined') {
+
+              // TODO: Need to account for multi-value fields.
+              var newItemElement = document.createElement('ons-list-item'); //My new item
+
+              newItemElement.setAttribute('modifier', 'nodivider');
+              var elementHTML = '';
+
+              // Boolean fields rendered as toggles.
+              if (typeof obj[0].value == 'boolean') {
+
+                var checked = null;
+                if (obj[0].value === true) {
+                  var checked = 'checked';
+                }
+
+                elementHTML += '<label class="center" for="inner-highlight-input">' + key + '</label>' +
+                  '<label class="right">' +
+                  '<ons-switch id="' + key +'-input" data-key="' + key + '" ' + checked + ' input-id="inner-highlight-input"></ons-switch>' +
+                  '</label>';
+
+              }
+              else {
+
+                // Else rendered as textfield.
+                elementHTML +=
+                  '<ons-if platform="ios other" class="left left-label">' + key + '</ons-if>' +
+                  '<div class="center">' +
+                  '<ons-input input-id="' + key + '-input" type="text" value="' + obj[0].value + '" data-key="' + key + '" placeholder="' + key + '" float></ons-input>' +
+                  '</div>';
+
+              }
+
+
+              newItemElement.innerHTML = elementHTML;
+              // Add new element to list.
+              listElement.appendChild(newItemElement)
+            }
+          }
+        }
+      });
+
+    },
     // Load a node and render in a list.
-    load: function(id, list){
+    load: function(entity,type,id, list){
 
-      // Load the node data.
-      jDrupal.entityLoad("group",id).then(function(node) {
+      var entity = new jDrupal.Entity(entity, type, id);
+      entity.load().then(function(entity){
+          
+           var listElement = document.getElementById(list); //My ons-list element
+           for (var key in entity.entity) {
+            // skip loop if the property is from prototype
+            if (!entity.entity.hasOwnProperty(key)) continue;
 
-        console.log(node);
+            var obj = entity.entity[key];
+            for (var prop in obj) {
+              // skip loop if the property is from prototype
+              if(!obj.hasOwnProperty(prop)) continue;
+
+              if (typeof obj[0].value != 'undefined') {
+
+                // Add simple field: value list items.
+                var newItemElement = document.createElement('ons-list-item'); //My new item
+                newItemElement.innerText = key + " : " + obj[0].value; //Text or HTML inside
+
+                // Add item to list.
+                listElement.appendChild(newItemElement)
+              }
+            }
+          }
+
       });
 
     }

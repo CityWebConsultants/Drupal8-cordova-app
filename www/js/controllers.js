@@ -236,14 +236,47 @@ myApp.controllers = {
 
     // Click handler for Edit button
     page.querySelector('[component="button/edit-group"]').onclick = function () {
-      fn.push('html/node_edit.html', {data: {id : document.querySelector('#myNavigator').topPage.data.id}});
+      fn.push('html/group_edit.html', {data: {id : document.querySelector('#myNavigator').topPage.data.id}});
+    };
+
+    // Click handler for Edit button
+    page.querySelector('[component="button/join-group"]').onclick = function () {
+      fn.push('html/group_join.html', {data: {id : document.querySelector('#myNavigator').topPage.data.id}});
     };
 
     // Refresh the previous page on clicking back incase node was updated.
     document.querySelector('#groupPage ons-back-button').options = {refresh: true}
 
     // Load node and append to list.
-    myApp.services.entity.load("group",document.querySelector('#myNavigator').topPage.data.id, 'field-list');
+    myApp.services.entity.load('group','chito_type',document.querySelector('#myNavigator').topPage.data.id, 'field-list');
+
+  },
+  //////////////////////////
+  // Group Edit Page Controller //
+  //////////////////////////
+  groupEditPage: function(page) {
+
+    // Populate the node edit form.
+    myApp.services.entity.update('group', 'chito_type', document.querySelector('#myNavigator').topPage.data.id, 'edit-field-list');
+
+    // Node save button click event.
+    page.querySelector('[component="button/save-group"]').onclick = function() {
+
+      ons.notification.confirm(
+        {
+          title: 'Save changes?',
+          message: 'Previous data will be overwritten.',
+          buttonLabels: ['Discard', 'Save']
+        }
+      ).then(function(buttonIndex) {
+        if (buttonIndex === 1) {
+
+          myApp.services.entity.save('group', 'chito_type', document.querySelector('#myNavigator').topPage.data.id, 'edit-field-list');
+
+        }
+      });
+
+    }
 
   },
   ////////////////////////
