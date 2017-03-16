@@ -241,7 +241,19 @@ myApp.controllers = {
 
     // Click handler for Edit button
     page.querySelector('[component="button/join-group"]').onclick = function () {
-      fn.push('html/group_join.html', {data: {id : document.querySelector('#myNavigator').topPage.data.id}});
+      ons.notification.confirm(
+        {
+          title: 'Please confirm!',
+          message: 'Are you sure you wanna join this group?',
+          buttonLabels: ['No', 'Yes']
+        }
+      ).then(function(buttonIndex) {
+        if (buttonIndex === 1) {
+
+          myApp.services.entity.save('group', 'chito_type', document.querySelector('#myNavigator').topPage.data.id, 'edit-field-list');
+
+        }
+      });
     };
 
     // Refresh the previous page on clicking back incase node was updated.
