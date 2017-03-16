@@ -358,6 +358,19 @@ myApp.services = {
     }
   },
 
+  entity : {
+    // Load a node and render in a list.
+    load: function(id, list){
+
+      // Load the node data.
+      jDrupal.entityLoad("group",id).then(function(node) {
+
+        console.log(node);
+      });
+
+    }
+  },
+
   //////////////////////
   // Animation Service //
   /////////////////////

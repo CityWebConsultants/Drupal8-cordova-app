@@ -222,7 +222,7 @@ myApp.controllers = {
         var newItemElement = document.createElement('ons-list-item'); //My new item
         newItemElement.innerText = node.entity.label[0].value; //Text or HTML inside
         newItemElement.setAttribute('tappable', '');
-        newItemElement.setAttribute('onclick', "fn.push('html/group.html', {data: {nid: " + node.id() + "}})");
+        newItemElement.setAttribute('onclick', "fn.push('html/group.html', {data: {id: " + node.entity.id[0].value + "}})");
         listElement.appendChild(newItemElement)
 
       }
@@ -236,14 +236,14 @@ myApp.controllers = {
 
     // Click handler for Edit button
     page.querySelector('[component="button/edit-group"]').onclick = function () {
-      fn.push('html/node_edit.html', {data: {nid : document.querySelector('#myNavigator').topPage.data.nid}});
+      fn.push('html/node_edit.html', {data: {id : document.querySelector('#myNavigator').topPage.data.id}});
     };
 
     // Refresh the previous page on clicking back incase node was updated.
-    document.querySelector('#nodePage ons-back-button').options = {refresh: true}
+    document.querySelector('#groupPage ons-back-button').options = {refresh: true}
 
     // Load node and append to list.
-    myApp.services.node.load(document.querySelector('#myNavigator').topPage.data.nid, 'field-list');
+    myApp.services.entity.load("group",document.querySelector('#myNavigator').topPage.data.id, 'field-list');
 
   },
   ////////////////////////
