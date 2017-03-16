@@ -218,8 +218,9 @@ myApp.controllers = {
       for (var i = 0; i < results.length; i ++) {
 
         var node = new jDrupal.Node(results[i]);
+
         var newItemElement = document.createElement('ons-list-item'); //My new item
-        newItemElement.innerText = node.getTitle(); //Text or HTML inside
+        newItemElement.innerText = node.entity.label[0].value; //Text or HTML inside
         newItemElement.setAttribute('tappable', '');
         newItemElement.setAttribute('onclick', "fn.push('html/group.html', {data: {nid: " + node.id() + "}})");
         listElement.appendChild(newItemElement)
