@@ -250,7 +250,7 @@ myApp.controllers = {
       ).then(function(buttonIndex) {
         if (buttonIndex === 1) {
 
-          myApp.services.entity.save('group', 'chito_type', document.querySelector('#myNavigator').topPage.data.id, 'edit-field-list');
+          myApp.services.entity.join('group', 'chito_type', document.querySelector('#myNavigator').topPage.data.id, 'field-list');
 
         }
       });

@@ -17,7 +17,7 @@ jDrupal.Entity = function(entityType, bundle, id) {
   // @TODO these flat values need to be turned into arrays, e.g. [ { value: 'foo'} ]
   this.bundle = bundle;
   this.entityID = id;
-  this.entityKeys = {id : id, type : entityType};;
+  this.entityKeys = {id : 'id', type : entityType};
 };
 
 /**
@@ -81,7 +81,8 @@ jDrupal.Entity.prototype.getBundle = function() {
 jDrupal.Entity.prototype.id = function() {
   var id = this.getEntityKey('id');
   return typeof this.entity[id] !== 'undefined' ?
-    this.entity[id][0].value : null;
+      this.entity[id][0].value : null;
+  
 };
 
 /**
@@ -97,7 +98,9 @@ jDrupal.Entity.prototype.language = function() {
  * @returns {boolean}
  */
 jDrupal.Entity.prototype.isNew = function() {
-  return !this.id();
+
+    return !this.id();
+
 };
 
 /**
@@ -143,9 +146,16 @@ jDrupal.Entity.prototype.load = function() {
     return new Promise(function(resolve, reject) {
 
       _entity.preLoad().then(function() {
-
-        var path = jDrupal.restPath() +
+        var path
+        if(_entity.id()){
+           path = jDrupal.restPath() +
             entityType + '/' + _entity.id() + '?_format=json';
+        }
+        else{
+          path = jDrupal.restPath() +
+            entityType + '/' + _entity.entityID + '?_format=json';
+        }
+        
         var req = new XMLHttpRequest();
 
         req.dg = {
@@ -225,7 +235,6 @@ jDrupal.Entity.prototype.save = function() {
         var resource = null;
         var path = null;
         var isNew = _entity.isNew();
-
         if (isNew) {
           method = 'POST';
           resource = 'create';

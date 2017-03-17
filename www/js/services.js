@@ -379,7 +379,6 @@ myApp.services = {
           ons.notification.alert(fail.message);
         });
       }
-      console.log(id);
       if (id) {
         // Load the node before saving.
         var entity = new jDrupal.Entity(entity, type, id);
@@ -414,7 +413,6 @@ myApp.services = {
           delete node.entity['sticky'];
           delete node.entity['path'];
           delete node.entity['comment'];
-
           saveEntity(node);
 
 
@@ -527,14 +525,14 @@ myApp.services = {
     load: function(entity,type,id, list){
 
       var entity = new jDrupal.Entity(entity, type, id);
-      entity.load().then(function(entity){
+      entity.load().then(function(node){
           
            var listElement = document.getElementById(list); //My ons-list element
-           for (var key in entity.entity) {
+           for (var key in node.entity) {
             // skip loop if the property is from prototype
-            if (!entity.entity.hasOwnProperty(key)) continue;
+            if (!node.entity.hasOwnProperty(key)) continue;
 
-            var obj = entity.entity[key];
+            var obj = node.entity[key];
             for (var prop in obj) {
               // skip loop if the property is from prototype
               if(!obj.hasOwnProperty(prop)) continue;
@@ -553,6 +551,10 @@ myApp.services = {
 
       });
 
+    },
+    join: function(entity, type, id){
+
+ //     /mysite/group/1/join
     }
   },
 
